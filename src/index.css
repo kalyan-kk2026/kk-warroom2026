@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* War room theme (single theme) */
+:root {
+  --war-dark: #0c0c14;
+  --war-panel: #16162a;
+  --war-border: #36365a;
+  --war-accent: #a78bfa;
+  --war-accentLight: #c4b5fd;
+  --war-accentDim: #8b5cf6;
+  --war-success: #4ade80;
+  --war-successDim: #22c55e;
+  --war-danger: #f87171;
+  --war-dangerDim: #f43f5e;
+  --war-info: #38bdf8;
+  --war-muted: #94a3b8;
+  --war-surface: #1e1e32;
+  --war-grid: rgba(54, 54, 90, 0.5);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased;
+  background-color: var(--war-dark);
+  color: var(--war-muted);
+  overflow-x: hidden;
+}
+
+@media (max-width: 1023px) {
+  body { -webkit-overflow-scrolling: touch; }
+}
+
+/* Full-page grid background with subtle motion */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(var(--war-grid) 1px, transparent 1px), linear-gradient(90deg, var(--war-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+  animation: grid-fade-in 0.6s ease-out;
+}
+@keyframes grid-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Section enter animation (use with opacity-0 and delay-* for stagger) */
+.section-enter {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.section-enter-active {
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+}
+.section-enter-done {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-war-panel;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-war-border rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-war-accentDim;
+}
+
+/* Real-time pulse for live indicators */
+.live-dot {
+  @apply w-2 h-2 rounded-full bg-war-success animate-pulse-slow;
+}
+
+/* Nav link hover lift */
+.nav-link-hover {
+  @apply transition-all duration-200 ease-out;
+}
+.nav-link-hover:hover {
+  transform: translateX(2px);
+}
+.nav-link-hover:active {
+  transform: translateX(0);
+}
+
+/* Recharts legend position override + transition */
+.recharts-legend-wrapper {
+  bottom: -13px !important;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Recharts: neutral cursor, no pointer on chart surface */
+.recharts-surface {
+  cursor: default;
+}
+
+/* Recharts chart container — smooth appear */
+.recharts-wrapper {
+  transition: opacity 0.35s ease-out;
+}
+
+/* X-axis tick hover (Rolling average chart) */
+.x-axis-tick-group:hover text {
+  fill: #a78bfa;
+}
+
+/* Card hover lift — use on panel/card wrappers */
+.card-hover-lift {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Stat number subtle entrance */
+@keyframes number-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-number-in {
+  animation: number-in 0.4s ease-out forwards;
+}
